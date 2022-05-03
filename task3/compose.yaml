@@ -1,0 +1,46 @@
+version: '3.3'
+
+
+networks:
+  postgres-server-a:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.24.24.0/24
+        
+services:
+  task3-postgres:
+    container_name: task3-postgres
+    # We use the latest postgres image
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: kC6FM,{36k%{9t#9
+      POSTGRES_USER: postgres
+      POSTGRES_DB: initdb
+    #command: 'POSTGRES_PASSWORD=kC6FM,{36k%{9t#9 POSTGRES_USER=postgres POSTGRES_DB=initdb'
+    restart: always
+    networks:
+      postgres-server-a:
+        ipv4_address: 172.24.24.2
+        
+  task3-server-a:
+    container_name: task3-server-a
+    build: server-a
+    restart: always
+    ports:
+      - 2000:2000
+    networks:
+      postgres-server-a:
+        ipv4_address: 172.24.24.3
+    depends_on:
+      - task3-postgres
+
+  task3-server-b:
+    container_name: task3-server-b
+    build: server-b
+    restart: always
+    network_mode: host
+    ports:
+      - 3000:3000
+    depends_on:
+      - task3-server-a

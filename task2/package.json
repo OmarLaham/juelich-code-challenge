@@ -1,0 +1,13 @@
+{
+  "name": "task2",
+  "version": "1.0.0",
+  "description": "Dockerized Node.js",
+  "author": "Omar Laham <p.omarlahhm@gmail.com>",
+  "main": "server.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.0"
+  }
+}
